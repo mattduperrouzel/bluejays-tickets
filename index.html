@@ -601,18 +601,19 @@
         totalGames = uniqueDates.size;
 
         // Render stats
+        const totalPairs = availableSeats + claimedSeats;
         document.getElementById('statsBar').innerHTML = `
             <div class="stat">
                 <div class="stat-number">${totalGames}</div>
-                <div class="stat-label">Available Games</div>
+                <div class="stat-label">Games</div>
             </div>
             <div class="stat">
-                <div class="stat-number" style="color:#4a9b6e;">${availableSeats}</div>
-                <div class="stat-label">Open Seat Pairs (2 tickets each)</div>
+                <div class="stat-number" style="color:#4a9b6e;">${availableSeats} / ${totalPairs}</div>
+                <div class="stat-label">Pairs Available</div>
             </div>
             <div class="stat">
                 <div class="stat-number" style="color:#999;">${claimedSeats}</div>
-                <div class="stat-label">Claimed</div>
+                <div class="stat-label">Pairs Claimed</div>
             </div>
         `;
 
