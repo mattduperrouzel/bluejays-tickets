@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blue Jays 2026 Ticket Requests | Bondi Produce & The Produce Counter</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #f5f7fa;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a3a2a 0%, #2d5a3f 50%, #1a3a2a 100%);
+            color: white;
+            padding: 30px 0 20px;
+            text-align: center;
+            border-bottom: 4px solid #4a9b6e;
+        }
+
+        .brand-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .brand-name {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .brand-name.bondi { color: #7cc89a; }
+        .brand-name.tpc { color: #e8c547; }
+
+        .brand-divider {
+            width: 2px;
+            height: 40px;
+            background: rgba(255,255,255,0.3);
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-top: 10px;
+            letter-spacing: 2px;
+        }
+
+        .header h1 span { font-weight: 700; color: #7cc89a; }
+
+        .subheader {
+            background: #223d30;
+            color: rgba(255,255,255,0.85);
+            text-align: center;
+            padding: 12px 20px;
+            font-size: 0.9rem;
+        }
+
+        .subheader strong { color: #e8c547; }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .rules {
+            background: white;
+            border-radius: 10px;
+            padding: 24px 28px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border-left: 4px solid #4a9b6e;
+        }
+
+        .rules h2 {
+            color: #1a3a2a;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .rules ul { list-style: none; padding: 0; }
+
+        .rules li {
+            padding: 6px 0;
+            padding-left: 22px;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .rules li::before {
+            content: "\2713";
+            position: absolute;
+            left: 0;
+            color: #4a9b6e;
+            font-weight: bold;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6b7c8a;
+            font-size: 1.1rem;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e0e5ea;
+            border-top-color: #4a9b6e;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Month headers */
+        .month-header {
+            background: #1a3a2a;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-radius: 8px 8px 0 0;
+            margin-top: 24px;
+        }
+
+        .month-header:first-child { margin-top: 0; }
+
+        /* Game cards */
+        .game-card {
+            background: white;
+            padding: 16px 22px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: 16px;
+            border-bottom: 1px solid #eef0f3;
+            transition: background 0.15s;
+        }
+
+        .game-card:hover { background: #fafbfc; }
+
+        .game-card:last-child { border-radius: 0 0 8px 8px; }
+
+        .game-card.management {
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .game-card.claimed-row {
+            opacity: 0.35;
+            pointer-events: none;
+        }
+
+        .game-info h3 {
+            font-size: 1.05rem;
+            color: #1a3a2a;
+            margin-bottom: 2px;
+        }
+
+        .game-info .meta {
+            font-size: 0.85rem;
+            color: #6b7c8a;
+        }
+
+        .jr-badge {
+            background: #e8c547;
+            color: #1a3a2a;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .mgmt-badge {
+            background: #1a3a2a;
+            color: #7cc89a;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .seat-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+
+        .seat-btn {
+            padding: 8px 16px;
+            border: 2px solid #4a9b6e;
+            background: white;
+            color: #2d5a3f;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.83rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .seat-btn:hover {
+            background: #4a9b6e;
+            color: white;
+        }
+
+        .seat-btn.taken {
+            border-color: #ddd;
+            color: #bbb;
+            background: #f5f5f5;
+            cursor: not-allowed;
+            text-decoration: line-through;
+        }
+
+        .seat-btn.taken:hover { background: #f5f5f5; color: #bbb; }
+
+        .claimed-label {
+            font-size: 0.8rem;
+            color: #bbb;
+            font-style: italic;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            max-width: 440px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .modal h2 {
+            color: #1a3a2a;
+            margin-bottom: 6px;
+            font-size: 1.2rem;
+        }
+
+        .modal .game-detail {
+            color: #6b7c8a;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .form-group { margin-bottom: 16px; }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #1a3a2a;
+            margin-bottom: 4px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #e0e5ea;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #4a9b6e;
+        }
+
+        .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+
+        .btn-submit {
+            flex: 1;
+            padding: 12px;
+            background: #2d5a3f;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-submit:hover { background: #1a3a2a; }
+        .btn-submit:disabled { background: #999; cursor: not-allowed; }
+
+        .btn-cancel {
+            padding: 12px 20px;
+            background: #f0f2f5;
+            color: #6b7c8a;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-cancel:hover { background: #e0e3e8; }
+
+        .confirmation { display: none; text-align: center; padding: 20px 0; }
+        .confirmation.active { display: block; }
+        .confirmation .check { font-size: 3rem; color: #4a9b6e; margin-bottom: 10px; }
+
+        .error-msg { display: none; text-align: center; padding: 20px 0; }
+        .error-msg.active { display: block; }
+        .error-msg .x-mark { font-size: 3rem; color: #e74c3c; margin-bottom: 10px; }
+
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #9aa5b0;
+            font-size: 0.8rem;
+        }
+
+        /* Stats bar */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1a3a2a;
+        }
+
+        .stat-label {
+            font-size: 0.78rem;
+            color: #6b7c8a;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 600px) {
+            .game-card { grid-template-columns: 1fr; }
+            .seat-buttons { justify-content: flex-start; }
+            .brand-logos { gap: 20px; }
+            .brand-name { font-size: 1.2rem; }
+            .header h1 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="brand-logos">
+            <div class="brand-name bondi">Bondi Produce</div>
+            <div class="brand-divider"></div>
+            <div class="brand-name tpc">The Produce Counter</div>
+        </div>
+        <h1>Blue Jays 2026 <span>Ticket Requests</span></h1>
+    </div>
+
+    <div class="subheader">
+        <strong>2 tickets per request</strong> &mdash; Section 225, Row 2 &mdash; Rogers Terrace &mdash; Seats 9 &amp; 10 or Seats 11 &amp; 12 &mdash; First come, first served
+    </div>
+
+    <div class="container">
+        <div class="rules">
+            <h2>How It Works</h2>
+            <ul>
+                <li>Browse the full 2026 home schedule below</li>
+                <li>Click a green button to claim <strong>2 tickets</strong></li>
+                <li>Once a seat pair is claimed, it's gone — first come, first served</li>
+                <li>One request per person</li>
+                <li>You'll see a confirmation once your request goes through</li>
+            </ul>
+        </div>
+
+        <div class="stats-bar" id="statsBar"></div>
+
+        <div id="gamesContainer">
+            <div class="loading">
+                <div class="spinner"></div>
+                Loading schedule...
+            </div>
+        </div>
+    </div>
+
+    <!-- REQUEST MODAL -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal">
+            <div id="formView">
+                <h2>Request Tickets</h2>
+                <div class="game-detail" id="modalGameDetail"></div>
+                <form id="requestForm">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="reqName" required placeholder="Your full name">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="reqEmail" required placeholder="your.email@company.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Seats</label>
+                        <input type="text" id="reqSeats" readonly style="background:#f5f7fa;">
+                    </div>
+                    <div class="modal-actions">
+                        <button type="submit" class="btn-submit" id="submitBtn">Submit Request</button>
+                        <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+            <div class="confirmation" id="confirmView">
+                <div class="check">&#10003;</div>
+                <h2>Tickets Claimed!</h2>
+                <p style="color:#6b7c8a; margin-top:8px;">You're all set. Enjoy the game!</p>
+                <button class="btn-cancel" style="margin-top:20px;" onclick="closeAndRefresh()">Close</button>
+            </div>
+            <div class="error-msg" id="errorView">
+                <div class="x-mark">&#10007;</div>
+                <h2>Request Failed</h2>
+                <p style="color:#6b7c8a; margin-top:8px;" id="errorText">Sorry, something went wrong.</p>
+                <button class="btn-cancel" style="margin-top:20px;" onclick="closeAndRefresh()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        &copy; 2026 Bondi Produce & The Produce Counter. Internal use only.
+    </div>
+
+    <script>
+    // ============================================
+    // CONFIG - Your Google Apps Script URL
+    // ============================================
+    const API_URL = 'https://script.google.com/macros/s/AKfycbySHO7HFxsYa2kD2PLuKJy03UV4qk_1tWixH52Dt9l22l5eHJ-EyBKgYIZbjbUts_5F2Q/exec';
+
+    let allGames = [];
+    let selectedRow = null;
+    let selectedSeats = null;
+
+    const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const DAY_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+    // Parse date - handles "March 30 2026" or "2026-05-26T07:00:00.000Z" or Date strings
+    function parseDate(val) {
+        if (!val) return { month: '', day: '', dayName: '', dateStr: '' };
+        var str = String(val);
+        // ISO format
+        if (str.includes('T') || str.match(/^\d{4}-\d{2}-\d{2}/)) {
+            var d = new Date(str);
+            return {
+                month: MONTH_NAMES[d.getUTCMonth()],
+                day: d.getUTCDate(),
+                dayName: DAY_NAMES[d.getUTCDay()],
+                dateStr: MONTH_NAMES[d.getUTCMonth()] + ' ' + d.getUTCDate() + ' ' + d.getUTCFullYear()
+            };
+        }
+        // Already "March 30 2026" format
+        var parts = str.split(' ');
+        if (parts.length >= 3) {
+            var d2 = new Date(parts[0] + ' ' + parts[1] + ', ' + parts[2]);
+            return {
+                month: parts[0],
+                day: parts[1],
+                dayName: DAY_NAMES[d2.getDay()],
+                dateStr: str
+            };
+        }
+        return { month: str, day: '', dayName: '', dateStr: str };
+    }
+
+    // Time lookup - Google Sheets mangles time values, so we map from the date
+    const TIME_LOOKUP = {
+        'March 27 2026': '7:07 PM', 'March 28 2026': '3:07 PM', 'March 29 2026': '1:37 PM',
+        'March 30 2026': '7:07 PM', 'March 31 2026': '7:07 PM', 'April 1 2026': '1:07 PM',
+        'April 6 2026': '7:07 PM', 'April 7 2026': '7:07 PM', 'April 8 2026': '3:07 PM',
+        'April 10 2026': '7:07 PM', 'April 11 2026': '3:07 PM', 'April 12 2026': '1:37 PM',
+        'April 24 2026': '7:07 PM', 'April 25 2026': '3:07 PM', 'April 26 2026': '1:37 PM',
+        'April 27 2026': '7:07 PM', 'April 28 2026': '7:07 PM', 'April 29 2026': '3:07 PM',
+        'May 8 2026': '7:07 PM', 'May 9 2026': '3:07 PM', 'May 10 2026': '1:37 PM',
+        'May 11 2026': '7:07 PM', 'May 12 2026': '7:07 PM', 'May 13 2026': '7:07 PM',
+        'May 22 2026': '7:07 PM', 'May 23 2026': '3:07 PM', 'May 24 2026': '12:15 PM',
+        'May 25 2026': '7:07 PM', 'May 26 2026': '7:07 PM', 'May 27 2026': '1:07 PM',
+        'June 5 2026': '7:07 PM', 'June 6 2026': '3:07 PM', 'June 7 2026': '1:37 PM',
+        'June 8 2026': '7:07 PM', 'June 9 2026': '7:07 PM', 'June 10 2026': '7:07 PM',
+        'June 12 2026': '7:37 PM', 'June 13 2026': '3:07 PM', 'June 14 2026': '1:37 PM',
+        'June 22 2026': '7:07 PM', 'June 23 2026': '7:07 PM', 'June 24 2026': '7:07 PM',
+        'June 25 2026': '7:07 PM', 'June 26 2026': '7:07 PM', 'June 27 2026': '3:07 PM',
+        'June 28 2026': '1:37 PM', 'June 29 2026': '7:07 PM', 'June 30 2026': '7:07 PM',
+        'July 1 2026': '3:07 PM', 'July 17 2026': '7:07 PM', 'July 18 2026': '3:07 PM',
+        'July 19 2026': '12:15 PM', 'July 20 2026': '7:07 PM', 'July 21 2026': '7:07 PM',
+        'July 22 2026': '7:07 PM', 'July 23 2026': '3:07 PM', 'July 31 2026': '7:07 PM',
+        'August 1 2026': '3:07 PM', 'August 2 2026': '1:37 PM',
+        'August 10 2026': '7:07 PM', 'August 11 2026': '7:07 PM', 'August 12 2026': '7:07 PM',
+        'August 13 2026': '3:07 PM', 'August 14 2026': '7:07 PM', 'August 15 2026': '3:07 PM',
+        'August 16 2026': '1:37 PM', 'August 25 2026': '7:07 PM', 'August 26 2026': '7:07 PM',
+        'August 27 2026': '7:07 PM', 'August 28 2026': '7:07 PM', 'August 29 2026': '3:07 PM',
+        'August 30 2026': '1:37 PM', 'September 11 2026': '7:07 PM', 'September 12 2026': '3:07 PM',
+        'September 13 2026': '1:37 PM', 'September 14 2026': '7:07 PM', 'September 15 2026': '7:07 PM',
+        'September 16 2026': '3:07 PM', 'September 25 2026': '7:07 PM', 'September 26 2026': '3:07 PM',
+        'September 27 2026': '3:07 PM'
+    };
+
+    function parseTime(val, dateStr) {
+        // Use lookup by parsed date - Google Sheets mangles time columns
+        if (dateStr && TIME_LOOKUP[dateStr]) return TIME_LOOKUP[dateStr];
+        if (!val) return '';
+        var str = String(val);
+        if (str.includes('AM') || str.includes('PM')) return str;
+        return str;
+    }
+
+    // Load games from Google Sheet
+    async function loadGames() {
+        try {
+            const resp = await fetch(API_URL);
+            allGames = await resp.json();
+            renderGames();
+        } catch (err) {
+            document.getElementById('gamesContainer').innerHTML =
+                '<div class="loading" style="color:#e74c3c;">Failed to load schedule. Please refresh the page.</div>';
+        }
+    }
+
+    function renderGames() {
+        const container = document.getElementById('gamesContainer');
+        container.innerHTML = '';
+
+        // Group by unique game (date + opponent), then pair seat rows
+        const gameMap = new Map();
+        allGames.forEach(g => {
+            const key = g['Date'] + '|' + g['Opponent'];
+            if (!gameMap.has(key)) {
+                gameMap.set(key, { info: g, seats: [] });
+            }
+            gameMap.get(key).seats.push(g);
+        });
+
+        // Stats
+        let totalGames = 0;
+        let availableSeats = 0;
+        let claimedSeats = 0;
+        const uniqueDates = new Set();
+
+        // Group by month
+        const months = new Map();
+        const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+        gameMap.forEach((game, key) => {
+            const parsed = parseDate(game.info['Date']);
+            game.info['_parsed'] = parsed;
+            game.info['_time'] = parseTime(game.info['Time'], parsed.dateStr);
+            const monthName = parsed.month;
+
+            if (!months.has(monthName)) {
+                months.set(monthName, []);
+            }
+            months.get(monthName).push(game);
+
+            if (game.info['Requestable'] === 'Yes') {
+                uniqueDates.add(parsed.dateStr);
+            }
+            game.seats.forEach(s => {
+                if (s['Requestable'] === 'Yes') {
+                    if (s['Status'] === 'Available') availableSeats++;
+                    else if (s['Status'] === 'Claimed') claimedSeats++;
+                }
+            });
+        });
+
+        totalGames = uniqueDates.size;
+
+        // Render stats
+        document.getElementById('statsBar').innerHTML = `
+            <div class="stat">
+                <div class="stat-number">${totalGames}</div>
+                <div class="stat-label">Home Games</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number" style="color:#4a9b6e;">${availableSeats}</div>
+                <div class="stat-label">Seats Available</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number" style="color:#999;">${claimedSeats}</div>
+                <div class="stat-label">Seats Claimed</div>
+            </div>
+        `;
+
+        // Render by month
+        months.forEach((games, monthName) => {
+            // Skip months with only management games
+            const hasRequestable = games.some(g => g.info['Requestable'] === 'Yes');
+            if (!hasRequestable) return;
+
+            const monthDiv = document.createElement('div');
+            monthDiv.innerHTML = `<div class="month-header">${monthName}</div>`;
+
+            games.forEach(game => {
+                const info = game.info;
+                const isManagement = info['Requestable'] === 'No';
+                const isJr = info['Jr Jays Sunday'] === 'Yes';
+
+                // Skip management games entirely
+                if (isManagement) return;
+
+                const card = document.createElement('div');
+                card.className = 'game-card';
+
+                let buttonsHtml = '';
+
+                {
+                    game.seats.forEach(seat => {
+                        const seatName = seat['Seat Pair'];
+                        const row = seat['row'];
+
+                        if (seat['Status'] === 'Available') {
+                            const modalDate = info['_parsed'].dayName + ', ' + info['_parsed'].dateStr;
+                            buttonsHtml += `<button class="seat-btn" onclick="openModal(${row}, '${seatName}', '${info['Opponent']}', '${modalDate}', '${info['_time']}')">${seatName}</button>`;
+                        } else {
+                            buttonsHtml += `<button class="seat-btn taken" disabled>${seatName} — Taken</button>`;
+                        }
+                    });
+
+                    // If both taken
+                    const allTaken = game.seats.every(s => s['Status'] !== 'Available');
+                    if (allTaken) {
+                        card.className += ' claimed-row';
+                    }
+                }
+
+                let jrHtml = isJr ? '<span class="jr-badge">Jr. Jays Sunday</span>' : '';
+
+                const p = info['_parsed'];
+                const monthShort = p.month.substring(0, 3);
+                const dayShort = p.dayName.substring(0, 3);
+                const displayDate = dayShort + ', ' + monthShort + ' ' + p.day;
+
+                card.innerHTML = `
+                    <div class="game-info">
+                        <h3>vs ${info['Opponent']}</h3>
+                        <div class="meta">${displayDate} &bull; ${info['_time']} ET${jrHtml}</div>
+                    </div>
+                    <div class="seat-buttons">${buttonsHtml}</div>
+                `;
+
+                monthDiv.appendChild(card);
+            });
+
+            container.appendChild(monthDiv);
+        });
+    }
+
+    function openModal(row, seats, opponent, dateStr, time) {
+        selectedRow = row;
+        selectedSeats = seats;
+
+        document.getElementById('modalGameDetail').textContent =
+            `vs ${opponent} — ${dateStr} at ${time} — ${seats}`;
+        document.getElementById('reqSeats').value = seats;
+        document.getElementById('reqName').value = '';
+        document.getElementById('reqEmail').value = '';
+        document.getElementById('submitBtn').disabled = false;
+        document.getElementById('submitBtn').textContent = 'Submit Request';
+
+        document.getElementById('formView').style.display = 'block';
+        document.getElementById('confirmView').className = 'confirmation';
+        document.getElementById('errorView').className = 'error-msg';
+        document.getElementById('modal').className = 'modal-overlay active';
+    }
+
+    function closeModal() {
+        document.getElementById('modal').className = 'modal-overlay';
+    }
+
+    function closeAndRefresh() {
+        closeModal();
+        loadGames(); // Refresh to show updated availability
+    }
+
+    document.getElementById('requestForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const name = document.getElementById('reqName').value.trim();
+        const email = document.getElementById('reqEmail').value.trim();
+        if (!name || !email) return;
+
+        const btn = document.getElementById('submitBtn');
+        btn.disabled = true;
+        btn.textContent = 'Submitting...';
+
+        try {
+            const resp = await fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain' },
+                body: JSON.stringify({ row: selectedRow, name: name, email: email })
+            });
+
+            const result = await resp.json();
+
+            document.getElementById('formView').style.display = 'none';
+
+            if (result.success) {
+                document.getElementById('confirmView').className = 'confirmation active';
+            } else {
+                document.getElementById('errorText').textContent = result.message || 'Sorry, something went wrong.';
+                document.getElementById('errorView').className = 'error-msg active';
+            }
+        } catch (err) {
+            document.getElementById('formView').style.display = 'none';
+            document.getElementById('errorView').className = 'error-msg active';
+        }
+    });
+
+    document.getElementById('modal').addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeModal();
+    });
+
+    // Load on page open
+    loadGames();
+    </script>
+</body>
+</html>
